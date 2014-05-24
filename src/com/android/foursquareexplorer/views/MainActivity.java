@@ -18,6 +18,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnCancelListener;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -129,13 +130,7 @@ public class MainActivity extends Activity implements BusinessCallBack {
 
 	// init activity data
 	protected void initActivityData(Context context) {
-		if (NetworkUtility.isConnected(context)) {
-			BusinessController.getInstance(context).getCurrentLocation(context,
-					this);
-		} else {
-			// showProgressBar();
-			BusinessController.getInstance(context).getVenuesFromDB(this);
-		}
+		BusinessController.getInstance(context).getVenuesFromDB(this);
 	}
 
 	@Override
@@ -214,5 +209,27 @@ public class MainActivity extends Activity implements BusinessCallBack {
 		}
 
 		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	public void startGetVenuesRequest(Context context,
+			BusinessCallBack businessCallBack) {
+		// request nearest venues
+		if (NetworkUtility.isConnected(context)
+				&& NetworkUtility.isGPSConnected(context)) {
+			BusinessController.getInstance(context).getCurrentLocation(context,
+					businessCallBack);
+		} // in case of no Internet connection
+		else if (!NetworkUtility.isConnected(context)) {
+			showErrorMsg(
+					context,
+					context.getResources().getString(
+							R.string.no_network_error_msg));
+		} // in case of no GPS connection
+		else if (!NetworkUtility.isGPSConnected(context)) {
+			showErrorMsg(
+					context,
+					context.getResources().getString(
+							R.string.no_gps_error_msg_text));
+		}
 	}
 }

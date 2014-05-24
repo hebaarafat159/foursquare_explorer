@@ -62,7 +62,7 @@ public class BusinessController {
 					nameValuePairs.add(new BasicNameValuePair(
 							Constants.REQUEST_VERSION_PARAM, clientVersion));
 					nameValuePairs.add(new BasicNameValuePair(
-							Constants.REQUEST_VENUES_RADIUS_PARAM, "200"));
+							Constants.REQUEST_VENUES_RADIUS_PARAM, "100"));
 
 					// send request
 					String response = NetworkUtility.sentGetRequest(
@@ -178,6 +178,8 @@ public class BusinessController {
 			double latitude = gps.getLatitude();
 			double longitude = gps.getLongitude();
 
+			// stop service after getting data
+			gps.stopSelf();
 			if (latitude != 0.0 && longitude != 0.0) {
 				String locationStr = latitude + "," + longitude;
 				PreferencesUtility.saveStringPreferences(context,

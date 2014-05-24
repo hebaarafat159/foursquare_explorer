@@ -13,5 +13,6 @@
     <string name="server_error_text">There is a problem in the server, please try again later</string>
     <string name="no_google_play_error_msg">Please install google play </string>
     <string name="waiting_msg_text">Please wait a while .. </string>
+    <string name="refresh_menu_text">Refresh</string>
 
 </resources>

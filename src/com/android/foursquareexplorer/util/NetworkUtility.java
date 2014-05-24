@@ -22,8 +22,11 @@ import org.json.JSONObject;
 import com.android.foursquareexplorer.R;
 
 import android.content.Context;
+import android.location.GpsStatus;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.NetworkInfo.State;
 import android.text.format.DateFormat;
 import android.widget.Toast;
 
@@ -188,4 +191,16 @@ public class NetworkUtility {
 	public static String getUserVersion(Date date) {
 		return DateFormat.format("yyyyMMdd", date).toString();
 	}
+
+	public static boolean isGPSConnected(Context context) {
+		LocationManager locationManager = (LocationManager) context
+				.getSystemService(Context.LOCATION_SERVICE);
+
+		// getting GPS status
+		boolean isGPSEnabled = locationManager
+				.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+		return isGPSEnabled;
+	}
+
 }
